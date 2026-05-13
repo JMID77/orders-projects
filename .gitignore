@@ -77,3 +77,6 @@ pids/
 *.pid
 *.seed
 *.pid.lock
+
+
+.sfdx

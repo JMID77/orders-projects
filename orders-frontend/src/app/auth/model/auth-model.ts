@@ -1,4 +1,4 @@
-import { User } from "@angular/users/model/user.model";
+import { UserDto } from "@angular/users/model/user.model";
 
 export interface AuthPost {
     name?: string;
@@ -10,12 +10,12 @@ export interface AuthData {
     name?: string;
     email: string;
     password: string;
-    user: User;
+    user: UserDto;
 }
 
 export interface AuthStorage {
     token: string;
     tokenType: string;
     expireIn: number;
-    user: User;
+    user: UserDto;
 }

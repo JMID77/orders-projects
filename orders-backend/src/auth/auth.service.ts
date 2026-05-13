@@ -11,6 +11,7 @@ import { User } from '../models/user.entity';
 import { ConfigService } from '@nestjs/config';
 import ms from 'ms';
 import { UserMapper } from '../models/user.mapper';
+import { env } from 'process';
 
 @Injectable()
 export class AuthService {
@@ -57,5 +58,9 @@ export class AuthService {
     private getExpiresTokenInSecondes(): number {
         const expireIn = this.configService.get<string>('JWT_EXPIRES_IN');
         return (ms(expireIn as ms.StringValue) / 1000);
+    }
+
+    isProduction(): boolean {
+        return (process.env.NODE_ENV === "PROD")
     }
 }

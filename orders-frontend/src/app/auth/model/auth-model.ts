@@ -13,9 +13,6 @@ export interface AuthData {
     user: UserDto;
 }
 
-export interface AuthStorage {
-    token: string;
-    tokenType: string;
-    expireIn: number;
+export interface UserStorage {
     user: UserDto;
 }

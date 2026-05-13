@@ -1,0 +1,10 @@
+<p-menubar [model]="items()">
+  <ng-template pTemplate="start">
+    <a routerLink="/dashboard" style="cursor: pointer">
+      <img ngSrc="./logo-small.jpg" height="50" width="82" class="mr-2" alt="Logo Dashboard" priority />
+    </a>
+  </ng-template>
+  <p-button [loading]="loggingOut()"
+    label="Disconnection {{authService.isLoggedIn() ? ' ('+authService.email()+')' : '' }}" (onClick)="logout()"
+    size="small" severity="secondary" [hidden]="!authService.isLoggedIn()" />
+</p-menubar>

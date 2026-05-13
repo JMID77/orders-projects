@@ -1,0 +1,31 @@
+<div class="h-full">
+    <!-- Remplacement de width fixe par 100% + ajout ombre et arrondis -->
+    <p-card styleClass="shadow-2 border-round-xl h-full" [style]="{ width: '100%' }">
+
+        <!-- Header Template -->
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 p-3 pb-0">
+                <i class="{{icon()}} text-2xl" style="color: var(--primary-color)"></i>
+                <span class="font-bold text-lg text-500">{{title()}}</span>
+            </div>
+        </ng-template>
+
+        <!-- Section Chiffres -->
+        <div class="flex flex-column align-items-center justify-content-center py-2">
+            <!-- Valeur principale -->
+            <div class="text-5xl font-bold {{colorStatus()}} mb-3">
+                {{ data()?.value }}
+            </div>
+
+            <!-- Comparaison avec seuil -->
+            <div class="flex flex-wrap align-items-center justify-content-center gap-2">
+                <span class="{{colorStatus()}} font-semibold flex align-items-center gap-1">
+                    <i class="pi {{iconStatus()}} text-sm"></i> {{data()?.percent}}%
+                </span>
+                <span class="text-500 text-sm">
+                    vs seuil de tolérance ({{data()?.threshold}})
+                </span>
+            </div>
+        </div>
+    </p-card>
+</div>

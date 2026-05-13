@@ -1,0 +1,13 @@
+<p-drawer [visible]="visible()" (visibleChange)="visible.set($event)" header="Aperçu PDF" [style]="{ width: '70vw' }"
+    (onHide)="close()">
+
+    @if(printing()) {
+    <div class="p-3">
+        Chargement du PDF...
+    </div>
+    }
+
+    @if(pdfUrl && !printing()) {
+    <iframe [src]="pdfUrl" width="100%" height="100%" style="border: none; min-height: 80vh;"></iframe>
+    }
+</p-drawer>

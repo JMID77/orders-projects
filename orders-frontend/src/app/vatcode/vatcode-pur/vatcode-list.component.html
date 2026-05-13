@@ -1,0 +1,90 @@
+<!-- vatcode-list.html -->
+<div class="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
+
+    @if (loading()) {
+    <div class="flex justify-center items-center py-20">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+    } @else {
+
+    <div class="bg-white rounded-lg shadow">
+        <!-- Toolbar -->
+        <div class="p-4 border-b flex justify-between items-center">
+            <h2 class="text-xl font-bold text-gray-800">Codes TVA</h2>
+            <button (click)="addRowAndEdit()"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center gap-2 transition">
+                <span class="text-lg">+</span> Créer
+            </button>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-600 uppercase text-sm font-semibold">
+                        <th class="p-4 border-b">Code</th>
+                        <th class="p-4 border-b">Description</th>
+                        <th class="p-4 border-b">Taux (%)</th>
+                        <th class="p-4 border-b">Actif</th>
+                        <th class="p-4 border-b text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (vat of vatCodes(); track vat.id) {
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <!-- Cellule Code -->
+                        <td class="p-4">
+                            @if (editingId() === vat.id) {
+                            <input [(ngModel)]="vat.code"
+                                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400 outline-none" />
+                            } @else { {{ vat.code }} }
+                        </td>
+
+                        <!-- Cellule Description -->
+                        <td class="p-4">
+                            @if (editingId() === vat.id) {
+                            <input [(ngModel)]="vat.description" class="w-full border rounded px-2 py-1 outline-none" />
+                            } @else { {{ vat.description }} }
+                        </td>
+
+                        <!-- Cellule Taux -->
+                        <td class="p-4">
+                            @if (editingId() === vat.id) {
+                            <input type="number" [(ngModel)]="vat.rate"
+                                class="w-24 border rounded px-2 py-1 outline-none" />
+                            } @else { {{ vat.rate }}% }
+                        </td>
+
+                        <!-- Cellule Actif -->
+                        <td class="p-4 text-center">
+                            @if (editingId() === vat.id) {
+                            <input type="checkbox" [(ngModel)]="vat.isActive" class="w-5 h-5" />
+                            } @else {
+                            <span [class]="vat.isActive ? 'text-green-600' : 'text-red-600'">
+                                {{ vat.isActive ? '✔' : '✖' }}
+                            </span>
+                            }
+                        </td>
+
+                        <!-- Actions -->
+                        <td class="p-4 flex justify-center gap-2">
+                            @if (editingId() === vat.id) {
+                            <button (click)="onRowEditSave(vat)"
+                                class="p-2 text-green-600 hover:bg-green-50 rounded">✔</button>
+                            <button (click)="onRowEditCancel(vat)"
+                                class="p-2 text-gray-500 hover:bg-gray-100 rounded">✖</button>
+                            } @else {
+                            <button (click)="onRowEditInit(vat)"
+                                class="p-2 text-blue-600 hover:bg-blue-50 rounded">✎</button>
+                            <button (click)="onRowDelete(vat)"
+                                class="p-2 text-red-600 hover:bg-red-50 rounded">🗑</button>
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+</div>

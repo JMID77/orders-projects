@@ -1,0 +1,22 @@
+<div class="grid justify-content-center p-4">
+    <!-- Ligne 1 : 2 graphs de 5 colonnes chacun (Total 10) -->
+    <div class="col-12 md:col-5">
+        <div style="height: 400px">
+            <app-graph-card-top title='Top 5 des clients' [datas]='facade.datasView()?.topCustomers!' />
+        </div>
+    </div>
+
+    <div class="col-12 md:col-5">
+        <div style="height: 400px">
+            <app-graph-card-top title='Top 5 des produits' [datas]='facade.datasView()?.topProducts!' />
+        </div>
+    </div>
+
+    <!-- Ligne 2 : 1 graph de 10 colonnes -->
+    <div class="col-12 md:col-10 mt-4">
+        <div style="height: 400px">
+            <app-graph-card-evol title="Evolution du chiffre d'affaire et des commandes"
+                [datas]='facade.datasView()?.revenueEvolution!' typeGraph='bar' />
+        </div>
+    </div>
+</div>

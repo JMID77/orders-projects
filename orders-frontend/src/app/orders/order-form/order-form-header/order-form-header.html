@@ -1,0 +1,29 @@
+<div [formGroup]="parentForm()" class="p-fluid grid">
+  <div class="field">
+    <label for="code">Code</label>
+    <input pInputText type="text" id="code" formControlName="code" class="w-full" [readonly]="isReadonly()" />
+    <small class="invalid-feedback">Le code est obligatoire (entre 3 et 10 caractères)</small>
+  </div>
+  <div class="field">
+    <label for="customerId">Client</label>
+    <p-select [options]="customers()" id="customerId" formControlName="customerId" optionLabel="name" optionValue="id"
+      placeholder="Sélectionner un client" [readonly]="isReadonly()" />
+    <small class="invalid-feedback">Veuillez sélectionner un client</small>
+  </div>
+  <div class="field">
+    <label for="date">Date</label>
+    <p-datepicker formControlName="date" id="date" showIcon dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
+      pInputMask="99/99/9999" [readonlyInput]="isReadonly()" [disabled]="isReadonly()" />
+    <small class="invalid-feedback">Veuillez sélectionner une date</small>
+  </div>
+  <div class="field">
+    <label for="statut">Statut</label>
+    <p-select [options]="statuses()" id="status" formControlName="status" placeholder="Sélectionner un statut"
+      [readonly]="isReadonly()" />
+    <small class="invalid-feedback">Veuillez sélectionner un statut</small>
+  </div>
+  <div class="field">
+    <label for="filePdf">Bon de commande (PDF)</label>
+    <input pInputText type="text" id="filePdf" formControlName="filePdf" class="w-full" readonly />
+  </div>
+</div>

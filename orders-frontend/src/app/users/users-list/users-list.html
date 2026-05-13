@@ -1,0 +1,91 @@
+<div class="card">
+    @if (loading()) {
+    <div class="flex justify-content-center p-5">
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+    } @else {
+    <div class="card flex justify-center gap-2">
+        <p-toast />
+        <p-confirmdialog />
+    </div>
+    <div style="max-width: 90rem; margin: 0 auto; padding-top: 1rem">
+
+        <p-toolbar class="mb-4">
+            <ng-template #start>
+                <p-button label="Créer" icon="pi pi-plus" class="mr-2" routerLink="/users/create" />
+            </ng-template>
+        </p-toolbar>
+        <p-table #dt [value]="users()" [rows]="15" columns]="cols" [paginator]="true"
+            [globalFilterFields]="['name', 'email']" [tableStyle]="{ 'min-width': '85rem' }"
+            [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
+            <ng-template #caption>
+                <div class="flex items-center justify-between w-full">
+                    <h5 class="text-primary font-bold text-2xl">Manage Users</h5>
+                    <div class="ml-auto">
+                        <p-iconfield>
+                            <p-inputicon class="pi pi-search" />
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
+                        </p-iconfield>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name" style="min-width: 16rem">
+                        <div class="flex items-center gap-2">
+                            Name
+                            <p-sortIcon field="name" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="email" style="min-width: 16rem">
+                        <div class="flex items-center gap-2">
+                            E-Mail
+                            <p-sortIcon field="email" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="isAdmin" style="min-width: 16rem">
+                        <div class="flex items-center gap-2">
+                            Admin
+                            <p-sortIcon field="isAdmin" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="isActive" style="min-width: 16rem">
+                        <div class="flex items-center gap-2">
+                            Actif ?
+                            <p-sortIcon field="isActive" />
+                        </div>
+                    </th>
+                    <th style="width: 12rem">Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-user>
+                <tr>
+                    <td style="min-width: 12rem">{{ user.name }}</td>
+                    <td style="min-width: 12rem">{{ user.email }}</td>
+
+                    <td style="min-width: 12rem; text-align: center">
+                        <i class="pi"
+                            [ngClass]="user.isAdmin ? 'pi-check-circle text-green-500' : 'pi-times-circle text-gray-400'">
+                        </i>
+                    </td>
+                    <td style="min-width: 12rem; text-align: center">
+                        <i class="pi"
+                            [ngClass]="user.isActive ? 'pi-check-circle text-green-500' : 'pi-times-circle text-gray-400'">
+                        </i>
+                    </td>
+                    <td>
+                        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"
+                            [routerLink]="['/users', user.id, 'edit']" />
+                        <p-button [loading]="deleting()" icon="pi pi-trash" severity="danger" [rounded]="true"
+                            [outlined]="true" (click)="deleteRecord(user, $event)" />
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    }
+</div>

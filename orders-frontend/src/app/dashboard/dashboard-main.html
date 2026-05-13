@@ -1,0 +1,12 @@
+<div class="p-4" style="max-width: 90rem; margin: 0 auto;">
+    <app-dashboard-selector />
+
+    @if (facade.loading()) {
+    <div class="flex justify-content-center p-8">
+        <p-progress-spinner />
+    </div>
+    } @else if (facade.datasView()) {
+    <app-dashboard-kpi />
+    <app-dashboard-graph />
+    }
+</div>

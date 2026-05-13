@@ -1,0 +1,33 @@
+<div class="grid justify-content-center" style="max-width: 90rem; margin: 0 auto; padding-top: 1rem">
+    <div class="col-10">
+        <p-toast />
+        <p-toolbar class="mb-4 shadow-2 border-round-xl">
+            <ng-template #start>
+                <div class="flex flex-column">
+                    <h5 class="text-primary font-bold text-2xl m-0">Dashboard d'activité</h5>
+                    <p class="subtitle mt-1 text-500 font-medium">Suivi des performances en temps réel</p>
+                </div>
+            </ng-template>
+            <ng-template #end>
+                <div
+                    class="flex align-items-center gap-4 p-2 px-3 bg-primary-50 border-round-xl border-left-3 border-primary shadow-1">
+                    <!-- On utilise flex et white-space-nowrap pour éviter le retour à la ligne -->
+                    <div class="flex align-items-center gap-2 white-space-nowrap">
+                        <span class="filter-label font-medium">Période&nbsp;:</span>
+                        <p-select [options]="facade.periods()" optionLabel="label" optionValue="value"
+                            [ngModel]="facade.period()" (onChange)="onChangePeriod($event.value)" placeholder="Choisir"
+                            class="min-w-min">
+                        </p-select>
+                    </div>
+                    <div class="flex align-items-center gap-2 white-space-nowrap">
+                        <span class="filter-label font-medium">Métrique&nbsp;:</span>
+                        <p-select [options]="facade.metrics()" optionLabel="label" optionValue="value"
+                            [ngModel]="facade.metric()" (onChange)="onChangeMetric($event.value)" placeholder="Choisir"
+                            class="min-w-min">
+                        </p-select>
+                    </div>
+                </div>
+            </ng-template>
+        </p-toolbar>
+    </div>
+</div>

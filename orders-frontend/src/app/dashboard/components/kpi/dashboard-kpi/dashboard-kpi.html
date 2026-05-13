@@ -1,0 +1,20 @@
+<div class="grid justify-content-center mt-2">
+    <!-- On crée une zone de 10 colonnes (comme le header et les graphs) -->
+    <div class="col-12 md:col-10">
+        <!-- On ouvre une sous-grille pour répartir les 3 cartes à l'intérieur de ces 10 colonnes -->
+        <div class="grid">
+            <div class="col-12 md:col-4">
+                <app-kpi-card title="Commandes" icon="pi pi-shopping-cart" [data]="facade.datasView()?.orders!" />
+            </div>
+
+            <div class="col-12 md:col-4">
+                <app-kpi-card title="Chiffre d'affaires" icon="pi pi-euro" [data]="facade.datasView()?.revenue!"
+                    [isCurrency]="true" />
+            </div>
+
+            <div class="col-12 md:col-4">
+                <app-pending-card title="En attente" icon="pi pi-clock" [data]="facade.datasView()?.pending!" />
+            </div>
+        </div>
+    </div>
+</div>

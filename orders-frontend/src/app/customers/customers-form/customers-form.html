@@ -1,0 +1,50 @@
+<p-toast />
+@if (loading()) {
+<div class="flex justify-content-center py-6">
+  <p-progress-spinner />
+</div>
+} @else {
+<div class="card flex justify-center gap-2">
+  <p-toast />
+  <p-confirmdialog />
+</div>
+<div class="flex justify-content-center pt-2">
+  <p-card class="w-full md:w-8 lg:w-6" [style]="{ maxWidth: '40rem' }">
+    <ng-template #header>
+      <div class="p-4 text-primary font-bold text-xl">
+        {{ customerId() ? 'Mise à jour client existant' : 'Nouveau Client' }}
+      </div>
+    </ng-template>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label for="code">Code</label>
+        <input pInputText type="input" id="code" formControlName="code" class="w-full" />
+        <small class="invalid-feedback">Le code est obligatoire (entre 3 et 10 caractères)</small>
+      </div>
+      <div class="field">
+        <label for="name">Name</label>
+        <input pInputText type="input" id="name" formControlName="name" class="w-full" />
+        <small class="invalid-feedback">Le nom est oblidatoire (100 caractères maximum)</small>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input pInputText type="email" id="email" formControlName="email" class="w-full" />
+        <small class="invalid-feedback">L'email est obligtoire</small>
+      </div>
+      <div class="field">
+        <label for="address">Adresse</label>
+        <textarea pTextarea type="input" id="address" formControlName="address" class="w-full" rows="8"></textarea>
+        <small class="invalid-feedback">L'adresse est obligatoire</small>
+      </div>
+      <div class="flex justify-content-end gap-2">
+        @if (customerId()) {
+        <p-button [loading]="deleting()" label="Supprimer" class="mr-auto" [outlined]="true"
+          (onClick)="deleteCustomer($event)" severity="danger" />
+        }
+        <p-button label="Annuler" routerLink="/customers" severity="secondary" />
+        <p-button type="submit" [loading]="submitting()" [label]="customerId() ? 'Mettre à jour' : 'Créer'" />
+      </div>
+    </form>
+  </p-card>
+</div>
+}

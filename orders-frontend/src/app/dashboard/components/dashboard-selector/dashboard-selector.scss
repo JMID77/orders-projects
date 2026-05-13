@@ -1,0 +1,19 @@
+/* 1. On cible le conteneur principal du select */
+:host ::ng-deep .p-select {
+    min-height: 1rem !important; /* Force une hauteur plus petite (ex: 32px) */
+    height: 2rem !important;
+    display: flex;
+    align-items: center;
+}
+
+/* 2. On réduit le padding du texte interne */
+:host ::ng-deep .p-select-label {
+    padding: 0 0.5rem !important;
+    line-height: 2rem !important; /* Aligne le texte verticalement */
+    font-size: 0.875rem !important; /* Optionnel : réduit un peu la police */
+}
+
+/* 3. On réduit la taille du bouton avec la flèche */
+:host ::ng-deep .p-select-dropdown {
+    width: 2rem !important;
+}

@@ -1,0 +1,131 @@
+<p-toast />
+<div class="card">
+  @if (loading()) {
+  <div class="flex justify-content-center p-5">
+    <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+  </div>
+  } @else {
+  <app-pdf-drawer-viewer #pdfViewer></app-pdf-drawer-viewer>
+  <div class="card flex justify-center gap-2">
+    <p-toast />
+    <p-confirmdialog />
+  </div>
+  <div style="max-width: 90rem; margin: 0 auto; padding-top: 1rem">
+    <p-toolbar class="mb-4">
+      <ng-template #start>
+        <p-button label="Créer" icon="pi pi-plus" class="mr-2" routerLink="/orders/create" />
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="orders()" dataKey="id" [expandedRowKeys]="expandedRows" [rows]="15" [columns]="cols"
+      [paginator]="true" [globalFilterFields]="['code', 'customer.code', 'customer.name', 'date', 'status']"
+      [tableStyle]="{ 'min-width': '85rem' }" [selection]="selectedOrders" (selectionChange)="selectedOrders = $event"
+      [rowHover]="true" rowExpandMode="single" (expandedRowKeysChange)="expandedRows = $any($event)"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+      <ng-template #caption>
+        <div class="card flex flex-wrap justify-center gap-4">
+          <h5 class="text-primary font-bold text-2xl">Manage Orders</h5>
+          <div class="ml-auto">
+            <p-button label="Expand All" icon="pi pi-plus" [text]="true" (onClick)="expandAll()" />
+            <p-button label="Collapse All" icon="pi pi-minus" [text]="true" (onClick)="collapseAll()" />
+          </div>
+          <div class="ml-auto">
+            <p-iconfield>
+              <p-inputicon class="pi pi-search" />
+              <input type="text" pInputText (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search..." />
+            </p-iconfield>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th style="width: 5rem"></th>
+          <th pSortableColumn="code" style="min-width: 12rem">
+            <div class="flex items-center gap-2">
+              Code
+              <p-sortIcon field="code" />
+            </div>
+          </th>
+          <th pSortableColumn="customer" style="min-width: 12rem">
+            <div class="flex items-center gap-2">
+              Client
+              <p-sortIcon field="customer" />
+            </div>
+          </th>
+          <th pSortableColumn="date" style="min-width: 12rem">
+            <div class="flex items-center gap-2">
+              Date
+              <p-sortIcon field="date" />
+            </div>
+          </th>
+          <th pSortableColumn="status" style="min-width: 12rem">
+            <div class="flex items-center gap-2">
+              Statut
+              <p-sortIcon field="status" />
+            </div>
+          </th>
+          <th>Total (HTVA)</th>
+          <th>Total (TVAC)</th>
+          <th style="width: 12rem">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-order let-expanded="expanded">
+        <tr>
+          <td>
+            <p-button type="button" pRipple [pRowToggler]="order" [text]="true" severity="secondary" [rounded]="true"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+          </td>
+          <td style="min-width: 8rem">{{ order.code }}</td>
+          <td style="min-width: 15rem">{{ order.customer.code }} - {{ order.customer.name }}</td>
+          <td style="min-width: 8rem">{{ order.date | date }}</td>
+          <td style="min-width: 8rem">
+            <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)" />
+          </td>
+          <td style="min-width: 8rem">{{ order.totalAmountHTVA | currency }}</td>
+          <td style="min-width: 8rem">{{ order.totalAmountTVAC | currency }}</td>
+          <td style="min-width: 15rem">
+            <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"
+              [routerLink]="['/orders', order.id, 'edit']" />
+            <p-button [loading]="deleting()" class="mr-2" icon="pi pi-trash" severity="danger" [rounded]="true"
+              [outlined]="true" (click)="deleteRecord(order, $event)" />
+            <p-button [loading]="printing()" icon="pi pi-print" severity="secondary" [rounded]="true" [outlined]="true"
+              (click)="pdfViewer.openPdf(order.id, EnumPdfType.ORDER)" />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #expandedrow let-order>
+        <tr>
+          <td colspan="7">
+            <div class="p-4 bg-gray-50 border-round shadow-1">
+              <p-table [value]="order.orderLines" size="small">
+                <ng-template pTemplate="header">
+        <tr>
+          <th>Produit</th>
+          <th>Prix Unitaire</th>
+          <th>Quantité</th>
+          <th>Total (HTVA)</th>
+          <th>Total (TVAC)</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-line>
+        <tr>
+          <td>{{ line.product.description }}</td>
+          <td>{{ line.price | currency }}</td>
+          <td>{{ line.quantity }}</td>
+          <td>{{ computeTotal(line) | currency }}</td>
+          <td>{{ computeTotal(line, true) | currency }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  </td>
+  </tr>
+  </ng-template>
+  </p-table>
+</div>
+}
+</div>

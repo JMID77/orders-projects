@@ -1,0 +1,96 @@
+<div class="card">
+    @if (loading()) {
+    <div class="flex justify-content-center py-6">
+        <p-progress-spinner />
+    </div>
+    } @else {
+    <div class="card flex justify-center gap-2">
+        <p-toast />
+        <p-confirmdialog />
+    </div>
+    <div style="max-width: 70rem; margin: 0 auto; padding-top: 1rem">
+        <p-toolbar class="mb-4">
+            <ng-template #start>
+                <p-button label="Créer" icon="pi pi-plus" class="mr-2" (click)="addRowAndEdit()" />
+            </ng-template>
+        </p-toolbar>
+        <p-table [value]="vatCodes()" dataKey="id" editMode="row" [rowTrackBy]="trackById"
+            [editingRowKeys]="editingRowKeys" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template #header>
+                <tr>
+                    <th style="width:22%">Code</th>
+                    <th style="width:22%">Description</th>
+                    <th style="width:22%">Taux</th>
+                    <th style="width:22%">Actif</th>
+                    <th style="width:12%">Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-vatCode let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="vatCode">
+                    <td>
+                        <p-cellEditor>
+                            <ng-template #input>
+                                <input pInputText type="text" [(ngModel)]="vatCode.code" />
+                            </ng-template>
+                            <ng-template #output>
+                                {{ vatCode.code }}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template #input>
+                                <input pInputText type="text" [(ngModel)]="vatCode.description" required />
+                            </ng-template>
+                            <ng-template #output>
+                                {{ vatCode.description }}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template #input>
+                                <input pInputText type="number" [(ngModel)]="vatCode.rate" required />
+                            </ng-template>
+                            <ng-template #output>
+                                {{ vatCode.rate }}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template #input>
+                                <p-checkbox [(ngModel)]="vatCode.isActive" [binary]="true">
+                                </p-checkbox>
+                            </ng-template>
+                            <ng-template #output>
+                                <i class="pi"
+                                    [ngClass]="vatCode.isActive ? 'pi-check text-green-500' : 'pi-times text-red-500'">
+                                </i>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td>
+                        <div class="flex items-center justify-center gap-2">
+                            @if (!editing) {
+                            <button pButton pRipple class="mr-2" type="button" pInitEditableRow icon="pi pi-pencil"
+                                (click)="onRowEditInit(vatCode)" [outlined]="true" severity="success" rounded>
+                            </button>
+
+                            <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
+                                (click)="onRowDelete(vatCode, $event)" />
+                            } @else {
+                            <button pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(vatCode)" text rounded severity="primary"></button>
+                            <button pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowEditCancel(vatCode, ri)" text rounded severity="secondary"></button>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    }
+</div>

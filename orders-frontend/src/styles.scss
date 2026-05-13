@@ -1,0 +1,99 @@
+/* --- IMPORTS --- */
+@import "primeicons/primeicons.css";
+@import 'primeflex/primeflex.css';
+
+/* --- VARIABLES & BASE --- */
+:root {
+    --p-font-family: 'Inter', sans-serif;
+    --form-field-height: 35px; /* Ta hauteur de référence */ /* Base: 42 */
+    --p-input-text-padding-y: 0.25rem; /* Base: 0.5 */
+    --form-font-size: 0.85;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Grotesk', var(--p-font-family);
+    background-color: var(--surface-ground);
+}
+
+/* --- LAYOUT --- */
+.container {
+    max-width: 95rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* --- UNIFORMISATION DES COMPOSANTS (PrimeNG v18) --- */
+
+/* On force la hauteur et la largeur sur les conteneurs et les inputs internes */
+.p-select,
+.p-inputnumber,
+.p-datepicker,
+.p-inputtext,
+.p-inputnumber-input {
+    width: 100% !important;
+    height: var(--form-field-height) !important;
+    min-height: var(--form-field-height) !important;
+    font-size: var(--form-font-size) !important;
+}
+
+/* Alignement vertical du contenu interne (Labels et Inputs) */
+.p-select,
+.p-select-label,
+.p-inputnumber-input,
+.p-datepicker-input {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 0.75rem !important;
+    line-height: 1.5 !important;
+}
+
+/* Cas spécifique : p-inputnumber-input ne doit pas avoir de padding vertical excessif 
+   car il hérite de la hauteur du parent */
+.p-inputnumber-input {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* --- GESTION DES ERREURS & VALIDATION --- */
+
+/* Bordure rouge pour tous les types de champs invalides */
+.ng-invalid.ng-touched {
+    border-color: var(--p-inputtext-invalid-border-color) !important;
+}
+
+/* Affichage du message d'erreur */
+.invalid-feedback {
+    display: none;
+    color: var(--p-red-500);
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.ng-invalid.ng-dirty + .invalid-feedback,
+.ng-invalid.ng-touched + .invalid-feedback {
+    display: block;
+}
+
+/* --- CORRECTIFS DIVERS --- */
+
+/* Icônes dans les inputs */
+.p-input-icon-left > i {
+    left: 0.75rem;
+    color: #6c757d;
+}
+
+app-order-form-header, 
+app-order-form-detail {
+    display: block;
+    width: 100%;
+}
+
+.grid > .field {
+    width: 100%;
+}

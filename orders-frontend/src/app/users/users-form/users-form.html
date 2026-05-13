@@ -1,0 +1,53 @@
+<p-toast />
+@if (loading()) {
+<div class="flex justify-content-center py-6">
+    <p-progress-spinner />
+</div>
+} @else {
+
+<div class="card flex justify-center gap-2">
+    <p-toast />
+    <p-confirmdialog />
+</div>
+<div class="flex justify-content-center pt-2">
+    <p-card class="w-full md:w-8 lg:w-6" [style]="{ maxWidth: '40rem' }">
+        <ng-template #header>
+            <div class="p-4 text-primary font-bold text-xl">
+                {{ userId() ? 'Mise à jour utilisateur existant' : 'Nouveau utilisateur' }}
+            </div>
+        </ng-template>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="field">
+                <label for="name">Name</label>
+                <input pInputText type="input" id="name" formControlName="name" class="w-full" />
+                <small class="invalid-feedback">Le nom est obligatoire (entre 5 et 150 caractères)</small>
+            </div>
+            <div class="field">
+                <label for="email">E-Mail</label>
+                <input pInputText type="email" id="email" formControlName="email" class="w-full" />
+                <small class="invalid-feedback">L'E-Mail est oblidatoire (255 caractères maximum)</small>
+            </div>
+            <div class="field-checkbox">
+                <p-checkbox inputId="isAdmin" formControlName="isAdmin" [binary]="true">
+                </p-checkbox>
+
+                <label for="isAdmin">Admin ?</label>
+            </div>
+            <div class="field-checkbox">
+                <p-checkbox inputId="isActive" formControlName="isActive" [binary]="true">
+                </p-checkbox>
+
+                <label for="isActive">Actif ?</label>
+            </div>
+            <div class="flex justify-content-end gap-2">
+                @if (userId()) {
+                <p-button [loading]="deleting()" label="Supprimer" class="mr-auto" [outlined]="true"
+                    (onClick)="deleteUser($event)" severity="danger" />
+                }
+                <p-button label="Annuler" routerLink="/users" severity="secondary" />
+                <p-button type="submit" [loading]="submitting()" [label]="userId() ? 'Mettre à jour' : 'Créer'" />
+            </div>
+        </form>
+    </p-card>
+</div>
+}

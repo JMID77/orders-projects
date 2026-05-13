@@ -1,0 +1,45 @@
+<p-toast />
+@if (loading()) {
+<div class="flex justify-content-center py-6">
+  <p-progress-spinner />
+</div>
+} @else {
+<div class="card flex justify-center gap-2">
+  <p-toast />
+  <p-confirmdialog />
+</div>
+<div class="flex justify-content-center pt-2">
+  <p-card class="w-full" [style]="{ maxWidth: '75rem' }">
+    <ng-template #header>
+      <div class="p-4 text-primary font-bold text-xl">
+        {{ orderId() ? 'Mise à jour commande existante' : 'Nouvelle commande' }}
+      </div>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="px-6">
+        <div class="w-full" style="max-width: 30rem;">
+          <app-order-form-header [parentForm]="form" [customers]="customers()" [statuses]="statuses()"
+            [isReadonly]="isReadonly()"></app-order-form-header>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+
+      <app-order-form-detail [parentForm]="form" [products]="products()" [vatCodes]="vatCodes()"
+        (lineDeleted)="onDeleteLine($event)" [isReadonly]="isReadonly()"></app-order-form-detail>
+
+      <div class="flex justify-content-end gap-3 mt-3">
+        @if (orderId() && !isReadonly()) {
+        <p-button [loading]="deleting()" label="Supprimer" class="mr-auto" [outlined]="true"
+          (onClick)="deleteOrder($event)" severity="danger" />
+        }
+        <p-button label="Annuler" routerLink="/orders" severity="secondary" />
+        @if(!isReadonly()) {
+        <p-button type="submit" [loading]="submitting()" [label]="orderId() ? 'Mettre à jour' : 'Créer'" />
+        }
+      </div>
+    </form>
+  </p-card>
+</div>
+}

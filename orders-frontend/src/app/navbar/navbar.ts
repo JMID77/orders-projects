@@ -57,7 +57,7 @@ export class Navbar {
         items: [
           { label: 'Utilisateurs', icon: 'pi pi-user-plus', routerLink: '/users' },
           { label: 'Codes TVA', icon: 'pi pi-money-bill', routerLink: '/vat' },
-          { label: 'Codes TVA (Pure)', icon: 'pi pi-money-bill', routerLink: '/vat-pure' }
+          // { label: 'Codes TVA (Pure)', icon: 'pi pi-money-bill', routerLink: '/vat-pure' }
         ]
       }
     ];

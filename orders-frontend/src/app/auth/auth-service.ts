@@ -14,7 +14,7 @@ export class AuthService {
 
   private userStorage = signal<AuthStorage | null>(this.getToken());
   readonly isLoggedIn = computed(() => !!this.userStorage());
-  readonly isAdmin = computed(() => this.userStorage()?.user.isAdmin ?? false);
+  readonly isAdmin = computed(() => this.userStorage()?.user.is_admin ?? false);
   readonly email = computed(() => this.userStorage()?.user.email ?? '');
 
   register(register: AuthPost): Observable<AuthStorage> {

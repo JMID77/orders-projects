@@ -11,6 +11,8 @@ build/
 coverage/
 .tmp/
 temp/
+test
+
 
 # Angular
 orders-frontend/.angular/
@@ -58,15 +60,12 @@ Thumbs.db
 # Docker
 # =========================
 docker-data/
+docker/*
 *.pid
 
 # Docker override local
 docker-compose.override.yml
 
-# =========================
-# Tests
-# =========================
-coverage/
 
 # =========================
 # Cache

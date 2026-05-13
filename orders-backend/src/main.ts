@@ -4,11 +4,14 @@ import { BadRequestException, ClassSerializerInterceptor, ValidationPipe } from 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { MysqlExceptionFilter } from './core/database/mysql-exception.filter';
 import { RequestContextInterceptor } from './core/database/request-context-interceptor';
+import cookieParser = require('cookie-parser');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn', 'verbose'],
   });
+
+  app.use(cookieParser());
 
   app.enableCors({
     origin: 'http://localhost:4200', // ou ton domaine frontend
